@@ -17,7 +17,7 @@ export function FormSteps() {
         variant="ghost"
         asChild
       >
-        <Link href="/">
+        <Link href="/project/new/step-1">
           <span className="flex items-center justify-center size-4 rounded-full bg-black text-white">
             1
           </span>
@@ -34,7 +34,7 @@ export function FormSteps() {
         variant="ghost"
         asChild
       >
-        <Link href="/">
+        <Link href="/project/new/step-2">
           <span
             className={cn(
               "flex items-center justify-center size-4 rounded-full ",
@@ -58,7 +58,7 @@ export function FormSteps() {
         variant="ghost"
         asChild
       >
-        <Link href="/">
+        <Link href="/project/new/step-3">
           <span
             className={cn(
               "flex items-center justify-center size-4 rounded-full ",
