@@ -25,7 +25,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { newProjectSchema } from "../schema"
 import { useNewProjectStore } from "../store"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 
 const schema = newProjectSchema.pick({
   name: true,
@@ -43,35 +43,28 @@ const initialState = {
 
 export default function NewProjectStep1() {
   const router = useRouter()
-  const [categoryState, setCateogoryState] = useState("software")
 
-  const { setData, name, description, category } = useNewProjectStore(
-    (state) => state,
-  )
+  const { setData, name, description } = useNewProjectStore((state) => state)
 
   const { reset, ...form } = useForm({
     resolver: zodResolver(schema),
     defaultValues: { ...initialState },
   })
 
-  // useEffect(() => {
-  //   reset((prevValues) => ({
-  //     ...prevValues,
-  //     ...(name && { name }),
-  //     ...(description && { description }),
-  //     // ...(category && { category }),
-  //   }))
-  // }, [reset, name, description])
-
   useEffect(() => {
-    if (category) {
-      setCateogoryState(category)
-      console.log(category)
-    }
-  }, [category])
+    reset((prevValues) => ({
+      ...prevValues,
+      ...(name && { name }),
+      ...(description && { description }),
+      // FIXME: category is not being set
+      // ...(category && { category }),
+    }))
+  }, [reset, name, description])
 
   function onSubmit(data: FormSchema) {
-    setData(data)
+    // FIXME: do not store category in local storage,
+    // since it is not being fetched correctly
+    setData({ name: data.name, description: data.description })
     router.push("/project/new/step-2")
   }
 
@@ -130,14 +123,12 @@ export default function NewProjectStep1() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Project Category</FormLabel>
-              <Select onValueChange={field.onChange} value={categoryState}>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a category..." />
                   </SelectTrigger>
                 </FormControl>
-
-                {console.log("FIELD", field.value)}
 
                 <SelectContent>
                   <SelectItem value="software">Software Development</SelectItem>
