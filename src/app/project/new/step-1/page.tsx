@@ -44,22 +44,24 @@ const initialState = {
 export default function NewProjectStep1() {
   const router = useRouter()
 
-  const { setData, name, description } = useNewProjectStore((state) => state)
+  const { setData, name, description, resetStore } = useNewProjectStore(
+    (state) => state,
+  )
 
-  const { reset, ...form } = useForm({
+  const { reset: resetForm, ...form } = useForm({
     resolver: zodResolver(schema),
     defaultValues: { ...initialState },
   })
 
   useEffect(() => {
-    reset((prevValues) => ({
+    resetForm((prevValues) => ({
       ...prevValues,
       ...(name && { name }),
       ...(description && { description }),
       // FIXME: category is not being set
       // ...(category && { category }),
     }))
-  }, [reset, name, description])
+  }, [resetForm, name, description])
 
   function onSubmit(data: FormSchema) {
     // FIXME: do not store category in local storage,
@@ -69,12 +71,13 @@ export default function NewProjectStep1() {
   }
 
   function onClearForm() {
-    useNewProjectStore.persist.clearStorage()
-    reset(initialState)
+    // useNewProjectStore.persist.clearStorage()
+    resetStore()
+    resetForm(initialState)
   }
 
   return (
-    <Form reset={reset} {...form}>
+    <Form reset={resetForm} {...form}>
       <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
