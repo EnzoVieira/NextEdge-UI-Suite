@@ -29,6 +29,7 @@ import { Check, ChevronsUpDown } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { newProjectSchema } from "../schema"
 
 const assignees = [
   { label: "Ada Lovelace", value: "ada-lovelace" },
@@ -39,10 +40,8 @@ const assignees = [
   { label: "Tim Berners-Lee", value: "tim-berners-lee" },
 ]
 
-const schema = z.object({
-  lead: z.string({
-    required_error: "Project lead is required",
-  }),
+const schema = newProjectSchema.pick({
+  lead: true,
 })
 
 type FormSchema = z.infer<typeof schema>

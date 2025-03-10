@@ -36,6 +36,7 @@ import { Check, ChevronsUpDown, Plus, X } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod"
+import { newProjectSchema } from "../schema"
 
 const assignees = [
   { label: "Ada Lovelace", value: "ada-lovelace" },
@@ -46,18 +47,8 @@ const assignees = [
   { label: "Tim Berners-Lee", value: "tim-berners-lee" },
 ]
 
-const schema = z.object({
-  tasks: z.array(
-    z.object({
-      name: z
-        .string({ required_error: "Task name is required" })
-        .min(3, { message: "Task name must be at least 3 characters" }),
-      priority: z.enum(["low", "medium", "high"], {
-        required_error: "Task priority is required",
-      }),
-      assignee: z.string().optional(),
-    }),
-  ),
+const schema = newProjectSchema.pick({
+  tasks: true,
 })
 
 type FormSchema = z.infer<typeof schema>

@@ -23,43 +23,65 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { newProjectSchema } from "../schema"
+import { useNewProjectStore } from "../store"
+import { useEffect, useState } from "react"
 
-const schema = z.object({
-  name: z
-    .string({
-      required_error: "Project name is required",
-    })
-    .min(3, {
-      message: "Project name must be at least 3 characters",
-    }),
-  description: z
-    .string({
-      required_error: "Project description is required",
-    })
-    .min(10, {
-      message: "Project description must be at least 10 characters",
-    }),
-  category: z.enum(["software", "marketing", "design", "strategy", "other"], {
-    required_error: "Project category is required",
-  }),
+const schema = newProjectSchema.pick({
+  name: true,
+  description: true,
+  category: true,
 })
 
 type FormSchema = z.infer<typeof schema>
 
+const initialState = {
+  name: "",
+  description: "",
+  category: "software",
+} as const
+
 export default function NewProjectStep1() {
   const router = useRouter()
+  const [categoryState, setCateogoryState] = useState("software")
 
-  const form = useForm({
+  const { setData, name, description, category } = useNewProjectStore(
+    (state) => state,
+  )
+
+  const { reset, ...form } = useForm({
     resolver: zodResolver(schema),
+    defaultValues: { ...initialState },
   })
 
+  // useEffect(() => {
+  //   reset((prevValues) => ({
+  //     ...prevValues,
+  //     ...(name && { name }),
+  //     ...(description && { description }),
+  //     // ...(category && { category }),
+  //   }))
+  // }, [reset, name, description])
+
+  useEffect(() => {
+    if (category) {
+      setCateogoryState(category)
+      console.log(category)
+    }
+  }, [category])
+
   function onSubmit(data: FormSchema) {
-    console.log(data)
+    setData(data)
     router.push("/project/new/step-2")
   }
 
+  function onClearForm() {
+    useNewProjectStore.persist.clearStorage()
+    reset(initialState)
+  }
+
   return (
-    <Form {...form}>
+    <Form reset={reset} {...form}>
       <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
@@ -108,12 +130,14 @@ export default function NewProjectStep1() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Project Category</FormLabel>
-              <Select onValueChange={field.onChange}>
+              <Select onValueChange={field.onChange} value={categoryState}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a category..." />
                   </SelectTrigger>
                 </FormControl>
+
+                {console.log("FIELD", field.value)}
 
                 <SelectContent>
                   <SelectItem value="software">Software Development</SelectItem>
@@ -134,7 +158,13 @@ export default function NewProjectStep1() {
         />
 
         <div className="flex justify-end">
-          <Button type="submit">Next</Button>
+          <Button type="button" variant="outline" onClick={onClearForm}>
+            Clear Form
+          </Button>
+
+          <Button className="ml-2" type="submit">
+            Save & Continue
+          </Button>
         </div>
       </form>
     </Form>
