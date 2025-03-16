@@ -19,7 +19,10 @@ export const useNewProjectStore = create<NewCourseState>()(
   persist<NewCourseState>(
     (set) => ({
       setData: (data) => set(data),
-      resetStore: () => set(initialStoreState),
+      resetStore: () => {
+        set(initialStoreState)
+        localStorage.removeItem("new-project-storage")
+      },
     }),
     {
       name: "new-project-storage",
