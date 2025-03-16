@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NextEdge UI Suite: Advanced Frontend Techniques
+
+## Short Description
+
+Highlights cutting-edge techniques and next-level performance in advanced Next.js 15.
+
+## Overview
+
+NextEdge UI Suite is a curated collection of production-grade React components built on Next.js 15. Designed as a blueprint for scalable, maintainable, and high-performance web applications, this repository showcases innovative solutions to complex UI challenges through modern design patterns and best practices.
+
+## Objectives
+
+- **Showcase Advanced UI Design:** Demonstrate industry-leading techniques in component architecture and state management.
+- **Simplify Complex Interactions:** Provide robust solutions for multi-step forms, infinite scrolling, and intricate animations.
+- **Educate and Inspire:** Serve as a learning resource for developers seeking to elevate their frontend expertise.
+- **Enhance User Experience:** Deliver smooth, responsive, and visually engaging interfaces.
+
+## Features
+
+### Completed
+
+- [x] **Dynamic Multi-Step Form:**  
+       An interactive three-step form for project registration with dynamic field additions and comprehensive validation.
+- [ ] **Advanced Input Controls:**  
+       Enhanced masked inputs and additional high-fidelity form components.
+- [ ] **Responsive Design:**  
+       Components optimized for performance across all device sizes.
+- [ ] **Seamless Page Transitions:**  
+       Visually engaging animations to enhance user navigation.
+- [ ] **Infinite Scrolling:**  
+       Efficient and scalable implementations inspired by leading social platforms.
+- [ ] **Expanded Animation Library:**  
+       Additional complex animations and UI transitions.
+- [ ] **Detailed Documentation:**  
+       Comprehensive guides and examples for each component.
+
+## Technologies
+
+- **Next.js 15**
+- **React**
+- **Zod**
+- **React Hook Form**
+- **Zustand**
+- **Shadcn**
+- **Tailwind CSS**
+- **TypeScript**
 
 ## Getting Started
 
-First, run the development server:
+Follow these steps to set up the project locally:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **Clone the repository:**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   ```bash
+   git clone https://github.com/yourusername/nextedge-ui-suite.git
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+   cd nextedge-ui-suite
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. **Install dependencies:**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   cd nextedge-ui-suite
+   npm install
+   # or
+   yarn install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. **Run the development server:**
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
 
-## Deploy on Vercel
+## Getting Started
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Contributions are welcome! To contribute:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Fork the repository.
+2. Create a new branch for your feature or bugfix.
+3. Submit a pull request detailing your changes.
+4. For major changes, open an issue first to discuss your ideas.
+
+## License
+
+This project is licensed under the MIT License.
+
+## Contact
+
+Feel free to leave any questions, suggestions or messsage!
+
+- Email: dev@enzovieira.com
+- LinkedIn: https://www.linkedin.com/in/enzo-vieira/
