@@ -24,15 +24,26 @@ import { Step2FormSchema, useStep2Form } from "./step-2-form.hooks"
 import { useRouter } from "next/navigation"
 import { Plus, X } from "lucide-react"
 import { SelectPriority } from "./select-priority"
+import { useNewProjectStore } from "../store"
 
 export function Step2Form() {
   const router = useRouter()
 
+  const setData = useNewProjectStore((state) => state.setData)
   const { form, fields, append, remove } = useStep2Form()
 
   function onSubmit(data: Step2FormSchema) {
-    console.log(data)
+    setData(data)
     router.push("/project/new/step-3")
+  }
+
+  function onRemoveTask(index: number) {
+    // remove from store
+    const tasks = form.getValues("tasks")
+    const newTasks = tasks.filter((_, i) => i !== index)
+    setData({ tasks: newTasks })
+    // remove from form
+    remove(index)
   }
 
   return (
@@ -63,13 +74,13 @@ export function Step2Form() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Task Priority</FormLabel>
-                  <Select onValueChange={field.onChange}>
+                  <Select
+                    defaultValue={field.value}
+                    onValueChange={field.onChange}
+                  >
                     <FormControl>
                       <SelectTrigger className="w-full">
-                        <SelectValue
-                          placeholder="Select priority..."
-                          defaultValue={field.value}
-                        />
+                        <SelectValue placeholder="Select priority..." />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -99,7 +110,7 @@ export function Step2Form() {
               size="sm"
               variant="destructive"
               type="button"
-              onClick={() => remove(index)}
+              onClick={() => onRemoveTask(index)}
             >
               Remove Task
               <X className="ml-2 size-3.5" />
@@ -123,7 +134,17 @@ export function Step2Form() {
         </Button>
 
         <div className="flex justify-end">
-          <Button type="submit">Next</Button>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => router.push("/project/new/step-1")}
+          >
+            Go back
+          </Button>
+
+          <Button className="ml-2" type="submit">
+            Save & Continue
+          </Button>
         </div>
       </form>
     </Form>
